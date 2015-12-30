@@ -10,24 +10,30 @@
 
 
 @interface InterfaceController()
-
+@property (unsafe_unretained, nonatomic) IBOutlet WKInterfaceButton *airportIdentifier;
+@property (unsafe_unretained, nonatomic) IBOutlet WKInterfaceLabel *metarText;
 @end
 
 
 @implementation InterfaceController
 
-- (void)awakeWithContext:(id)context {
+- (void)awakeWithContext:(id)context
+{
     [super awakeWithContext:context];
 
     // Configure interface objects here.
+    [_airportIdentifier setTitle:@"KSBA"];
+    [_metarText setText:@"300553Z\n00000KT\n10SM\nCLR\n04/M01\nA3011\nRMK\nAO2\nSLP197\nT00441011\n10144\n20033\n53017"];
 }
 
-- (void)willActivate {
+- (void)willActivate
+{
     // This method is called when watch view controller is about to be visible to user
     [super willActivate];
 }
 
-- (void)didDeactivate {
+- (void)didDeactivate
+{
     // This method is called when watch view controller is no longer visible
     [super didDeactivate];
 }

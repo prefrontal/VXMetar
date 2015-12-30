@@ -544,6 +544,7 @@
 				08D1DDA51C33A39F00739779 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		08D1DDA71C33A39F00739779 /* Build configuration list for PBXNativeTarget "VXMetar WatchKit App" */ = {
 			isa = XCConfigurationList;
@@ -552,6 +553,7 @@
 				08D1DDA91C33A39F00739779 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		08D1DDAB1C33A39F00739779 /* Build configuration list for PBXNativeTarget "VXMetar" */ = {
 			isa = XCConfigurationList;
@@ -560,6 +562,7 @@
 				08D1DDAD1C33A39F00739779 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
