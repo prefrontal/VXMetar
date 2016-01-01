@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		08AC4EAE1C36480300FFFA35 /* VXReportingStation.m in Sources */ = {isa = PBXBuildFile; fileRef = 08AC4EAD1C36480300FFFA35 /* VXReportingStation.m */; };
+		08AC4EB11C364B0500FFFA35 /* VXReportingStationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 08AC4EB01C364B0500FFFA35 /* VXReportingStationManager.m */; };
 		08D1DD721C33A39F00739779 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D1DD711C33A39F00739779 /* main.m */; };
 		08D1DD751C33A39F00739779 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D1DD741C33A39F00739779 /* AppDelegate.m */; };
 		08D1DD781C33A39F00739779 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D1DD771C33A39F00739779 /* ViewController.m */; };
@@ -65,6 +67,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		08AC4EAC1C36480300FFFA35 /* VXReportingStation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VXReportingStation.h; sourceTree = "<group>"; };
+		08AC4EAD1C36480300FFFA35 /* VXReportingStation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VXReportingStation.m; sourceTree = "<group>"; };
+		08AC4EAF1C364B0400FFFA35 /* VXReportingStationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VXReportingStationManager.h; sourceTree = "<group>"; };
+		08AC4EB01C364B0500FFFA35 /* VXReportingStationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VXReportingStationManager.m; sourceTree = "<group>"; };
 		08D1DD6D1C33A39F00739779 /* VXMetar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VXMetar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		08D1DD711C33A39F00739779 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		08D1DD731C33A39F00739779 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -167,6 +173,10 @@
 				08D1DD991C33A39F00739779 /* InterfaceController.m */,
 				08D1DD9B1C33A39F00739779 /* ExtensionDelegate.h */,
 				08D1DD9C1C33A39F00739779 /* ExtensionDelegate.m */,
+				08AC4EAF1C364B0400FFFA35 /* VXReportingStationManager.h */,
+				08AC4EB01C364B0500FFFA35 /* VXReportingStationManager.m */,
+				08AC4EAC1C36480300FFFA35 /* VXReportingStation.h */,
+				08AC4EAD1C36480300FFFA35 /* VXReportingStation.m */,
 				08D1DD9E1C33A39F00739779 /* Assets.xcassets */,
 				08D1DDA01C33A39F00739779 /* Info.plist */,
 			);
@@ -317,8 +327,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				08AC4EAE1C36480300FFFA35 /* VXReportingStation.m in Sources */,
 				08D1DD9D1C33A39F00739779 /* ExtensionDelegate.m in Sources */,
 				08D1DD9A1C33A39F00739779 /* InterfaceController.m in Sources */,
+				08AC4EB11C364B0500FFFA35 /* VXReportingStationManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
