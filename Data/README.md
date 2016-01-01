@@ -13,4 +13,4 @@ Metadata for the National Airspace Systems Resources data. Specifically, the wea
 
 **WXL.txt**
 
-Weather reporting locations data from the National Airspace Systems Resources database. The above metadata file is used to decode the file format, which is based on fixed-length text fields. This file contains latitude and longitude data for each station down to tenths of a second. Also provides information on the weather servies available at each location, including METAR.
+Weather reporting locations data from the National Airspace Systems Resources database. The above metadata file is used to decode the file format, which is based on fixed-length text fields. This file contains latitude and longitude data for each station down to tenths of a second. Also provides information on the weather servies available at each location, including METAR. One downside is that not all of the locations providing METAR are listed as such in the file. This means that the NCAR data is needed to produce a complete list.
