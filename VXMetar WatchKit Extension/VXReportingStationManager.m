@@ -46,6 +46,7 @@
     {
         stationList = [NSMutableArray new];
         [self loadStations];
+        [self getClosestStation];
     }
     
     return self;
@@ -57,6 +58,32 @@
 }
 
 #pragma mark Station List Handling
+
+- (VXReportingStation *) getClosestStation
+{
+    VXReportingStation *closestStation = nil;
+    double closestStationDistance = 10000;
+    
+    double currentLatitude = 34.42;
+    double currentLongitude = 119.71;
+    
+    for (VXReportingStation *station in stationList)
+    {
+        // Use Haversine distance formula
+
+        double latitudeDiff = station.latitude - currentLatitude;
+        double longitudeDiff = station.longitude - currentLongitude;
+        
+        double a = pow(sin(latitudeDiff/2),2) + cos(station.latitude) * cos(currentLatitude) * pow(sin(longitudeDiff/2),2);
+        double c = 2 * atan2( sqrt(a), sqrt(1-a) );
+        double d = 6373 * c; // 6373 is radius of the Earth in km
+
+        if (d < closestStationDistance)
+            closestStation = station;
+    }
+    
+    return closestStation;
+}
 
 - (void) loadStations
 {

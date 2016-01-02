@@ -14,4 +14,6 @@
 
 + (id)sharedManager;
 
+- (VXReportingStation *) getClosestStation;
+
 @end
