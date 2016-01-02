@@ -33,7 +33,9 @@ std::string ConvertToDecimal (const std::string input)
 	double seconds = atof(coordinate.substr(5,2).c_str());
 	
 	double final = degrees + minutes/60 + seconds/60/60;
-	//std::cout << final << ": " << degrees << ", " << minutes << ", " << seconds << std::endl;
+	
+	// Debugging (if required)
+	// std::cout << final << ": " << degrees << ", " << minutes << ", " << seconds << std::endl;
 	
 	std::string output;
 	
@@ -122,19 +124,28 @@ void GenerateNasrOutput (std::vector<std::string> stationList)
 		
 		std::string associatedCity = trim(input.substr(22,26));
 		std::string associatedState = trim(input.substr(48,2));
-		std::string associatedCounty = trim(input.substr(50,3));
+		std::string associatedCountry = trim(input.substr(50,3));
 
 		std::string servicesAvailable = trim(input.substr(59,60));
 
-		//std::cout << identifier << std::endl;
-		//std::cout << latitude << ", " << longitude << std::endl;
-		//std::cout << elevation << ", " << elevationAccuracy << std::endl;
-		//std::cout << associatedCity << ", " << associatedState << ", " << associatedCounty << std::endl;
-		//std::cout << servicesAvailable << std::endl;
-		//std::cout << std::endl;
+		// Debugging (if required)
+		// std::cout << identifier << std::endl;
+		// std::cout << latitude << ", " << longitude << std::endl;
+		// std::cout << elevation << ", " << elevationAccuracy << std::endl;
+		// std::cout << associatedCity << ", " << associatedState << ", " << associatedCounty << std::endl;
+		// std::cout << servicesAvailable << std::endl;
+		// std::cout << std::endl;
 
-		outFile << identifier << " " << latitude << " " << longitude << " " << associatedCity << " " << associatedState << std::endl;
+		//outFile << identifier << " " << latitude << " " << longitude << " " << associatedCity << " " << associatedState << std::endl;
 
+		outFile << "VXReportingStation *" << identifier << " = [VXReportingStation new];" << std::endl;
+		outFile << identifier << ".stationIdentifier = @\"" << identifier << "\";" << std::endl;
+		outFile << identifier << ".associatedCity = @\"" << associatedCity << "\";" << std::endl;
+		outFile << identifier << ".associatedState = @\"" << associatedState << "\";" << std::endl;
+		outFile << identifier << ".latitude = " << latitude << ";" << std::endl;
+		outFile << identifier << ".longitude = " << longitude << ";" << std::endl;
+		outFile << "[stationList addObject:" << identifier << "];" << std::endl;
+		outFile << std::endl;
 	}
 	
 	outFile.close();

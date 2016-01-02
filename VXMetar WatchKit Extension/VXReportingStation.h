@@ -11,7 +11,8 @@
 @interface VXReportingStation : NSObject
 
 @property (nonatomic, readwrite, retain) NSString *stationIdentifier;
-@property (nonatomic, readwrite, retain) NSString *closestCity;
+@property (nonatomic, readwrite, retain) NSString *associatedCity;
+@property (nonatomic, readwrite, retain) NSString *associatedState;
 @property (nonatomic, readwrite, assign) double latitude;
 @property (nonatomic, readwrite, assign) double longitude;
 

@@ -10,4 +10,8 @@
 
 @interface VXReportingStationManager : NSObject
 
+@property (nonatomic,readwrite,retain) NSMutableArray *stationList;
+
++ (id)sharedManager;
+
 @end

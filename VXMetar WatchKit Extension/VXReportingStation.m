@@ -11,7 +11,8 @@
 @implementation VXReportingStation
 
 @synthesize stationIdentifier;
-@synthesize closestCity;
+@synthesize associatedCity;
+@synthesize associatedState;
 @synthesize latitude;
 @synthesize longitude;
 
