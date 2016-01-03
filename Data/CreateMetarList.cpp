@@ -50,7 +50,7 @@ std::vector<std::string> GenerateMetarStationList ()
 {
 	// Load the NCAR stations file
 	// This is a data file with fixed field lengths
-	std::ifstream infile ("WeatherStations.txt");
+	std::ifstream infile ("NCAR-WeatherStations.txt");
 	
 	std::string line;
 	std::vector<std::string> stationList;
@@ -90,7 +90,7 @@ void GenerateNasrOutput (std::vector<std::string> stationList)
 {
 	// Load the NASR weather station fil
 	// This is a data file with fixed field lengths
-	std::ifstream infile ("WXL.txt");
+	std::ifstream infile ("NASR-WXL.txt");
 	std::ofstream outFile;
 	
 	outFile.open ("Output-StationList.txt");
