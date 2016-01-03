@@ -93,7 +93,7 @@ void GenerateNasrOutput (std::vector<std::string> stationList)
 	std::ifstream infile ("WXL.txt");
 	std::ofstream outFile;
 	
-	outFile.open ("weather-objc.txt");
+	outFile.open ("Output-StationList.txt");
 	
 	std::string line;
 	

@@ -8,12 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
+@class VXReportingStation;
+
 @interface VXReportingStationManager : NSObject
 
 @property (nonatomic,readwrite,retain) NSMutableArray *stationList;
 
 + (id)sharedManager;
 
-- (VXReportingStation *) getClosestStation;
+- (VXReportingStation *) findClosestStationWithLatitude:(double)currentLatitude andLongitude:(double)currentLongitude;
 
 @end

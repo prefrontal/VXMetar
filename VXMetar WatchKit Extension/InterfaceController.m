@@ -6,8 +6,12 @@
 //  Copyright © 2015 Voxelwise. All rights reserved.
 //
 
-#import "InterfaceController.h"
+#import <CoreLocation/CoreLocation.h>
 
+#import "VXReportingStation.h"
+#import "VXReportingStationManager.h"
+
+#import "InterfaceController.h"
 
 @interface InterfaceController()
 @property (unsafe_unretained, nonatomic) IBOutlet WKInterfaceButton *airportIdentifier;
@@ -17,25 +21,76 @@
 
 @implementation InterfaceController
 
+@synthesize locationManager;
+
 - (void)awakeWithContext:(id)context
 {
     [super awakeWithContext:context];
 
     // Configure interface objects here.
-    [_airportIdentifier setTitle:@"KSBA"];
-    [_metarText setText:@"300553Z\n00000KT\n10SM\nCLR\n04/M01\nA3011\nRMK\nAO2\nSLP197\nT00441011\n10144\n20033\n53017"];
+    [_airportIdentifier setTitle:@""];
+    [_metarText setText:@""];
 }
 
 - (void)willActivate
 {
     // This method is called when watch view controller is about to be visible to user
     [super willActivate];
+    
+    // Create location manager obejct and set delegate
+    if (locationManager == nil)
+    {
+        locationManager = [CLLocationManager new];
+        [locationManager setDelegate:self];
+        [locationManager setDesiredAccuracy:kCLLocationAccuracyKilometer];
+        [locationManager setDistanceFilter:100];
+    }
+    
+    // Ask the user for permission to determine location
+    [locationManager requestWhenInUseAuthorization];
+    
+    [locationManager requestLocation];
 }
 
 - (void)didDeactivate
 {
     // This method is called when watch view controller is no longer visible
     [super didDeactivate];
+}
+
+#pragma mark Location Manager Delegate Methods
+
+-(void) locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
+{
+    if (status == kCLAuthorizationStatusAuthorizedWhenInUse || status == kCLAuthorizationStatusAuthorizedAlways)
+    {
+        [locationManager setDesiredAccuracy:kCLLocationAccuracyKilometer];
+        [locationManager setDistanceFilter:100];
+        [locationManager requestLocation];
+    }
+}
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
+{
+    CLLocation *location = [locations lastObject];
+    double currentLatitude = location.coordinate.latitude;
+    double currentLongitude = location.coordinate.longitude;
+
+    VXReportingStationManager *stationManager = [VXReportingStationManager sharedManager];
+    VXReportingStation *closestStation = [stationManager findClosestStationWithLatitude:currentLatitude andLongitude:currentLongitude];
+
+    [_airportIdentifier setTitle:[closestStation stationIdentifier]];
+    [_metarText setText:@""];
+}
+
+-(void) locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
+{
+    NSLog (@"%@", newLocation);
+}
+
+- (void) locationManager:(CLLocationManager *)manager didFailWithError:(nonnull NSError *)error
+{
+    NSLog (@"Could not find location: %@", error);
 }
 
 @end

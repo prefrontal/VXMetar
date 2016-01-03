@@ -16,4 +16,9 @@
 @synthesize latitude;
 @synthesize longitude;
 
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"%@ - %f - %f", stationIdentifier, latitude, longitude];
+}
+
 @end
