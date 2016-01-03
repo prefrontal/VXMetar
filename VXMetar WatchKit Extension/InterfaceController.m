@@ -79,6 +79,8 @@
     VXReportingStationManager *stationManager = [VXReportingStationManager sharedManager];
     VXReportingStation *closestStation = [stationManager findClosestStationWithLatitude:currentLatitude andLongitude:currentLongitude];
 
+    [self issueMetarRequestWithStation:closestStation];
+
     [_airportIdentifier setTitle:[closestStation stationIdentifier]];
     [_metarText setText:@""];
 }
@@ -91,6 +93,30 @@
 - (void) locationManager:(CLLocationManager *)manager didFailWithError:(nonnull NSError *)error
 {
     NSLog (@"Could not find location: %@", error);
+}
+
+#pragma mark METAR Request Methods
+
+/**
+ * Submit a request for the latest METAR data for a specific reporting station
+ *
+ * @param station A VXReportingStation object identifying the station of interest
+ */
+- (void) issueMetarRequestWithStation:(VXReportingStation *)station
+{
+    NSURL *url = [NSURL URLWithString:@"https://aviationweather.gov/adds/dataserver_current/httpparam?dataSource=metars&requestType=retrieve&format=xml&stationString=KSBA&hoursBeforeNow=2&mostRecent=TRUE"];
+    NSData *data = [NSData dataWithContentsOfURL:url];
+    NSString *ret = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    NSLog (@"ret=%@", ret);
+}
+
+/**
+ * Method that will be called when network data is returned with the METAR data
+ */
+- (void) networkDataReturn
+{
+
+
 }
 
 @end
