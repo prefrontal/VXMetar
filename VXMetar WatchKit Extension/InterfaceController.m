@@ -104,10 +104,28 @@
  */
 - (void) issueMetarRequestWithStation:(VXReportingStation *)station
 {
-    NSURL *url = [NSURL URLWithString:@"https://aviationweather.gov/adds/dataserver_current/httpparam?dataSource=metars&requestType=retrieve&format=xml&stationString=KSBA&hoursBeforeNow=2&mostRecent=TRUE"];
-    NSData *data = [NSData dataWithContentsOfURL:url];
-    NSString *ret = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    NSLog (@"ret=%@", ret);
+    // NSURL *url = [NSURL URLWithString:@"https://aviationweather.gov/adds/dataserver_current/httpparam?dataSource=metars&requestType=retrieve&format=xml&stationString=KSBA&hoursBeforeNow=2&mostRecent=TRUE"];
+    // NSData *data = [NSData dataWithContentsOfURL:url];
+    // NSString *ret = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+
+    NSString *prefix = @"https://aviationweather.gov/adds/dataserver_current/httpparam?dataSource=metars&requestType=retrieve&format=xml&stationString=";
+    NSString *suffix = @"&hoursBeforeNow=2&mostRecent=TRUE";
+
+    NSString *query = [NSString stringWithFormat:@"%@%@%@",prefix,station.stationIdentifier,suffix];
+    // NSURL *url = [NSURL URLWithString:adds];
+    // NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    // [[[NSURLConnection alloc] initWithRequest:request delegate:self] autorelease];
+
+    NSURLSession *session = [NSURLSession sharedSession];
+
+    [[session dataTaskWithURL:[NSURL URLWithString:query]
+            completionHandler:^(NSData *data, NSURLResponse *response, NSError *error)
+            {
+                NSString* myString;
+                myString = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
+                NSLog (@"%@", myString);
+
+            }] resume];
 }
 
 /**
