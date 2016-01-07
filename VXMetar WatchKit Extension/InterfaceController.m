@@ -13,15 +13,23 @@
 
 #import "InterfaceController.h"
 
+#pragma mark Class-Continuation Category
+
 @interface InterfaceController()
+{
+    // NSXMLParser Handling
+    NSXMLParser *parser;
+    bool isRawTextElement;
+}
+
 @property (unsafe_unretained, nonatomic) IBOutlet WKInterfaceButton *airportIdentifier;
 @property (unsafe_unretained, nonatomic) IBOutlet WKInterfaceLabel *metarText;
+
 @end
 
+#pragma mark Begin Implementation
 
 @implementation InterfaceController
-
-@synthesize locationManager;
 
 - (void)awakeWithContext:(id)context
 {
@@ -38,18 +46,18 @@
     [super willActivate];
     
     // Create location manager obejct and set delegate
-    if (locationManager == nil)
+    if (_locationManager == nil)
     {
-        locationManager = [CLLocationManager new];
-        [locationManager setDelegate:self];
-        [locationManager setDesiredAccuracy:kCLLocationAccuracyKilometer];
-        [locationManager setDistanceFilter:100];
+        _locationManager = [CLLocationManager new];
+        [_locationManager setDelegate:self];
+        [_locationManager setDesiredAccuracy:kCLLocationAccuracyKilometer];
+        [_locationManager setDistanceFilter:100];
     }
     
     // Ask the user for permission to determine location
-    [locationManager requestWhenInUseAuthorization];
+    [_locationManager requestWhenInUseAuthorization];
     
-    [locationManager requestLocation];
+    [_locationManager requestLocation];
 }
 
 - (void)didDeactivate
@@ -58,15 +66,52 @@
     [super didDeactivate];
 }
 
+#pragma mark METAR Request Methods
+
+/**
+ * Submit a request for the latest METAR data for a specific reporting station
+ *
+ * @param station A VXReportingStation object identifying the station of interest
+ */
+- (void) issueMetarRequestWithStation:(VXReportingStation *)station
+{
+    NSString *prefix = @"https://aviationweather.gov/adds/dataserver_current/httpparam?dataSource=metars&requestType=retrieve&format=xml&stationString=";
+    NSString *suffix = @"&hoursBeforeNow=2&mostRecent=TRUE";
+    NSString *query = [NSString stringWithFormat:@"%@%@%@",prefix,station.stationIdentifier,suffix];
+    
+    NSURL *dataUrl = [NSURL URLWithString:query];
+    
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSURLSessionDataTask *dataTask = [session dataTaskWithURL:dataUrl completionHandler:
+                ^(NSData *data, NSURLResponse *response, NSError *error)
+                {
+                    if (error != nil)
+                    {
+                        [_metarText setText:@"Couldn't reach server..."];
+                        return;
+                    }
+                  
+                    //NSString* myString = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
+                    //NSLog (@"%@", myString);
+
+                    parser = [[NSXMLParser alloc] initWithData:data];
+                    [parser setDelegate:self];
+                    [parser setShouldResolveExternalEntities:NO];
+                    [parser parse];
+                }];
+    
+    [dataTask resume];
+}
+
 #pragma mark Location Manager Delegate Methods
 
 -(void) locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
 {
     if (status == kCLAuthorizationStatusAuthorizedWhenInUse || status == kCLAuthorizationStatusAuthorizedAlways)
     {
-        [locationManager setDesiredAccuracy:kCLLocationAccuracyKilometer];
-        [locationManager setDistanceFilter:100];
-        [locationManager requestLocation];
+        [_locationManager setDesiredAccuracy:kCLLocationAccuracyKilometer];
+        [_locationManager setDistanceFilter:100];
+        [_locationManager requestLocation];
     }
 }
 
@@ -95,46 +140,24 @@
     NSLog (@"Could not find location: %@", error);
 }
 
-#pragma mark METAR Request Methods
+#pragma mark NSXMLParser Delegate Methods
 
-/**
- * Submit a request for the latest METAR data for a specific reporting station
- *
- * @param station A VXReportingStation object identifying the station of interest
- */
-- (void) issueMetarRequestWithStation:(VXReportingStation *)station
+- (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qualifiedName attributes:(NSDictionary *)attributeDict
 {
-    // NSURL *url = [NSURL URLWithString:@"https://aviationweather.gov/adds/dataserver_current/httpparam?dataSource=metars&requestType=retrieve&format=xml&stationString=KSBA&hoursBeforeNow=2&mostRecent=TRUE"];
-    // NSData *data = [NSData dataWithContentsOfURL:url];
-    // NSString *ret = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-
-    NSString *prefix = @"https://aviationweather.gov/adds/dataserver_current/httpparam?dataSource=metars&requestType=retrieve&format=xml&stationString=";
-    NSString *suffix = @"&hoursBeforeNow=2&mostRecent=TRUE";
-
-    NSString *query = [NSString stringWithFormat:@"%@%@%@",prefix,station.stationIdentifier,suffix];
-    // NSURL *url = [NSURL URLWithString:adds];
-    // NSURLRequest *request = [NSURLRequest requestWithURL:url];
-    // [[[NSURLConnection alloc] initWithRequest:request delegate:self] autorelease];
-
-    NSURLSession *session = [NSURLSession sharedSession];
-
-    [[session dataTaskWithURL:[NSURL URLWithString:query]
-            completionHandler:^(NSData *data, NSURLResponse *response, NSError *error)
-            {
-                NSString* myString;
-                myString = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
-                NSLog (@"%@", myString);
-
-            }] resume];
+    if ([elementName isEqualToString:@"raw_text"])
+        isRawTextElement = true;
 }
-
-/**
- * Method that will be called when network data is returned with the METAR data
- */
-- (void) networkDataReturn
+      
+- (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName
 {
-
-
+    if ([elementName isEqualToString:@"raw_text"])
+        isRawTextElement = false;
+}
+      
+- (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string
+{
+    if (isRawTextElement)
+        [_metarText setText:string];
 }
 
 @end

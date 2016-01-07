@@ -9,7 +9,7 @@
 #import <WatchKit/WatchKit.h>
 #import <Foundation/Foundation.h>
 
-@interface InterfaceController : WKInterfaceController <CLLocationManagerDelegate>
+@interface InterfaceController : WKInterfaceController <CLLocationManagerDelegate, NSXMLParserDelegate>
 
 @property (nonatomic,readwrite,retain) CLLocationManager *locationManager;
 
