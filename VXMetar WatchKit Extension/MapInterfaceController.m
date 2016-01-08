@@ -9,7 +9,6 @@
 #import "MapInterfaceController.h"
 
 @interface MapInterfaceController ()
-@property (unsafe_unretained, nonatomic) IBOutlet WKInterfaceMap *mapView;
 @end
 
 @implementation MapInterfaceController
@@ -26,10 +25,10 @@
     // This method is called when watch view controller is about to be visible to user
     [super willActivate];
 
-    CLLocationCoordinate2D location = CLLocationCoordinate2DMake (34.4258, 119.7142);
-    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance (location, 1000, 1000);
+    CLLocationCoordinate2D location = CLLocationCoordinate2DMake (34.4258, -119.7142);
+    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance (location, 10000, 10000);
 
-    [_mapView setRegion:region];
+    [self.mapView setRegion:region];
 }
 
 - (void)didDeactivate

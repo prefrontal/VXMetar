@@ -36,10 +36,10 @@
             <objects>
                 <controller id="Nlr-Mq-xEj" customClass="MapInterfaceController">
                     <items>
-                        <map width="1" height="1" alignment="left" id="PB2-FA-1tn"/>
+                        <map width="1" height="1" alignment="left" id="5gC-fW-yYs"/>
                     </items>
                     <connections>
-                        <outlet property="mapView" destination="PB2-FA-1tn" id="URp-H5-gED"/>
+                        <outlet property="mapView" destination="5gC-fW-yYs" id="2jA-Tw-asK"/>
                     </connections>
                 </controller>
             </objects>
