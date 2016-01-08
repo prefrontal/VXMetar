@@ -31,13 +31,16 @@
             </objects>
             <point key="canvasLocation" x="305" y="389"/>
         </scene>
-        <!--Interface Controller-->
+        <!--Map Interface Controller-->
         <scene sceneID="Q5i-Vy-dZs">
             <objects>
-                <controller id="Nlr-Mq-xEj">
+                <controller id="Nlr-Mq-xEj" customClass="MapInterfaceController">
                     <items>
                         <map width="1" height="1" alignment="left" id="PB2-FA-1tn"/>
                     </items>
+                    <connections>
+                        <outlet property="mapView" destination="PB2-FA-1tn" id="URp-H5-gED"/>
+                    </connections>
                 </controller>
             </objects>
             <point key="canvasLocation" x="547" y="384"/>
