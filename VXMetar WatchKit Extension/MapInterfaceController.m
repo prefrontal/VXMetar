@@ -8,7 +8,11 @@
 
 #import "MapInterfaceController.h"
 
+#import "VXReportingStation.h"
+#import "VXReportingStationManager.h"
+
 @interface MapInterfaceController ()
+
 @end
 
 @implementation MapInterfaceController
@@ -25,7 +29,10 @@
     // This method is called when watch view controller is about to be visible to user
     [super willActivate];
 
-    CLLocationCoordinate2D location = CLLocationCoordinate2DMake (34.4258, -119.7142);
+    VXReportingStationManager *stationManager = [VXReportingStationManager sharedManager];
+    CLLocationCoordinate2D lastPosition = [stationManager getLastPosition];
+
+    CLLocationCoordinate2D location = CLLocationCoordinate2DMake (lastPosition.latitude, -1 * lastPosition.longitude);
     MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance (location, 10000, 10000);
 
     [self.mapView setRegion:region];

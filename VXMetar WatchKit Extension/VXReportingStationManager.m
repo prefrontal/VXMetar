@@ -17,13 +17,13 @@
 
 @interface VXReportingStationManager ()
 
+@property (nonatomic, readwrite, assign) CLLocationCoordinate2D lastPosition;
+
 @end
 
 // -----------------------------------------------------------------------
 
 @implementation VXReportingStationManager
-
-@synthesize stationList;
 
 #pragma mark Singleton Methods
 
@@ -43,8 +43,8 @@
 {
     if (self = [super init])
     {
-        stationList = [NSMutableArray new];
-        [self loadStations];
+        _stationList = [self loadStations];
+        _lastPosition = CLLocationCoordinate2DMake (0.0, 0.0);
     }
     
     return self;
@@ -70,8 +70,6 @@ static const double EARTH_RADIUS_IN_KILOMETERS = 6372.79756;
  */
 - (VXReportingStation *) findClosestStationWithLatitude:(double)currentLatitude andLongitude:(double)currentLongitude;
 {
-
-
     // The goal is to find the closest reporting station to the given coordinates
     // Keep track of the closest station and the best distance value so far
     VXReportingStation *closestStation = nil;
@@ -83,7 +81,7 @@ static const double EARTH_RADIUS_IN_KILOMETERS = 6372.79756;
     // double currentLongitudeRadians = fabs(currentLongitude) * DEGREES_TO_RADIANS;
     
     // Iterate over the station list, calculating distance for each station
-    for (VXReportingStation *station in stationList)
+    for (VXReportingStation *station in _stationList)
     {
         // Using the Haversine distance formula: https://en.wikipedia.org/wiki/Haversine_formula
         
@@ -100,8 +98,15 @@ static const double EARTH_RADIUS_IN_KILOMETERS = 6372.79756;
             closestStation = station;
         }
     }
-    
+
+    _lastPosition = CLLocationCoordinate2DMake (closestStation.latitude, closestStation.longitude);
+
     return closestStation;
+}
+
+- (CLLocationCoordinate2D) getLastPosition
+{
+    return _lastPosition;
 }
 
 @end

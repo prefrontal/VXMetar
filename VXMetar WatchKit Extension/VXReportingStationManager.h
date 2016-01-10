@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreLocation/CoreLocation.h>
 
 @class VXReportingStation;
 
@@ -17,5 +18,7 @@
 + (id)sharedManager;
 
 - (VXReportingStation *) findClosestStationWithLatitude:(double)currentLatitude andLongitude:(double)currentLongitude;
+
+- (CLLocationCoordinate2D) getLastPosition;
 
 @end

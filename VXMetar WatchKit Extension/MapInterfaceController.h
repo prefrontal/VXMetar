@@ -10,6 +10,7 @@
 #import <Foundation/Foundation.h>
 
 @interface MapInterfaceController : WKInterfaceController
+
 @property (unsafe_unretained, nonatomic) IBOutlet WKInterfaceMap *mapView;
 
 @end
