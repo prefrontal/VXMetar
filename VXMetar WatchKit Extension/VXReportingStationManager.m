@@ -17,7 +17,7 @@
 
 @interface VXReportingStationManager ()
 
-@property (nonatomic, readwrite, assign) CLLocationCoordinate2D lastPosition;
+@property (nonatomic,readwrite,retain) VXReportingStation *lastStation;
 
 @end
 
@@ -44,7 +44,7 @@
     if (self = [super init])
     {
         _stationList = [self loadStations];
-        _lastPosition = CLLocationCoordinate2DMake (0.0, 0.0);
+        self.lastStation = [VXReportingStation new];
     }
     
     return self;
@@ -99,14 +99,23 @@ static const double EARTH_RADIUS_IN_KILOMETERS = 6372.79756;
         }
     }
 
-    _lastPosition = CLLocationCoordinate2DMake (closestStation.latitude, closestStation.longitude);
+    // Cache the last station found for quick lookup in other classes
+    self.lastStation = closestStation;
 
     return closestStation;
 }
 
-- (CLLocationCoordinate2D) getLastPosition
+#pragma mark Last Station Methods
+
+- (VXReportingStation *) getLastStation
 {
-    return _lastPosition;
+    return _lastStation;
+}
+
+- (CLLocationCoordinate2D) getLastStationPosition
+{
+    CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(_lastStation.latitude, _lastStation.longitude);
+    return coordinate;
 }
 
 @end

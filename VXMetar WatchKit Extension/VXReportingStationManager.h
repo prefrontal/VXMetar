@@ -17,8 +17,11 @@
 
 + (id)sharedManager;
 
+// Primary methods for station search
 - (VXReportingStation *) findClosestStationWithLatitude:(double)currentLatitude andLongitude:(double)currentLongitude;
 
-- (CLLocationCoordinate2D) getLastPosition;
+// Convenience methods for use in secondary classes
+- (VXReportingStation *) getLastStation;
+- (CLLocationCoordinate2D) getLastStationPosition;
 
 @end

@@ -30,7 +30,7 @@
     [super willActivate];
 
     VXReportingStationManager *stationManager = [VXReportingStationManager sharedManager];
-    CLLocationCoordinate2D lastPosition = [stationManager getLastPosition];
+    CLLocationCoordinate2D lastPosition = [stationManager getLastStationPosition];
 
     CLLocationCoordinate2D location = CLLocationCoordinate2DMake (lastPosition.latitude, -1 * lastPosition.longitude);
     MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance (location, 10000, 10000);
