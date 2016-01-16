@@ -36,8 +36,8 @@
     [super awakeWithContext:context];
 
     // Configure interface objects here.
-    [_airportIdentifier setTitle:@""];
-    [_metarText setText:@""];
+    [_airportIdentifier setTitle:@"TextA"];
+    [_metarText setText:@"TextB"];
 }
 
 - (void)willActivate

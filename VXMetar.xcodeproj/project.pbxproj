@@ -10,6 +10,9 @@
 		084808501C3F9DA700A44570 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0848084F1C3F9DA700A44570 /* MapKit.framework */; };
 		084808521C3F9E0500A44570 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 084808511C3F9E0500A44570 /* MapKit.framework */; };
 		086D54B31C3F90B400D584B5 /* MapInterfaceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 086D54B21C3F90B400D584B5 /* MapInterfaceController.m */; };
+		08A375011C4A211E00CD8BDB /* VXReportingStationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 08AC4EB01C364B0500FFFA35 /* VXReportingStationManager.m */; };
+		08A375021C4A212100CD8BDB /* VXReportingStationManager+Data.m in Sources */ = {isa = PBXBuildFile; fileRef = 08AD80741C423F1E00FC52BF /* VXReportingStationManager+Data.m */; };
+		08A375031C4A212500CD8BDB /* VXReportingStation.m in Sources */ = {isa = PBXBuildFile; fileRef = 08AC4EAD1C36480300FFFA35 /* VXReportingStation.m */; };
 		08AC4EAE1C36480300FFFA35 /* VXReportingStation.m in Sources */ = {isa = PBXBuildFile; fileRef = 08AC4EAD1C36480300FFFA35 /* VXReportingStation.m */; };
 		08AC4EB11C364B0500FFFA35 /* VXReportingStationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 08AC4EB01C364B0500FFFA35 /* VXReportingStationManager.m */; };
 		08AD80751C423F1E00FC52BF /* VXReportingStationManager+Data.m in Sources */ = {isa = PBXBuildFile; fileRef = 08AD80741C423F1E00FC52BF /* VXReportingStationManager+Data.m */; };
@@ -75,12 +78,12 @@
 		084808511C3F9E0500A44570 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		086D54B11C3F90B400D584B5 /* MapInterfaceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapInterfaceController.h; sourceTree = "<group>"; };
 		086D54B21C3F90B400D584B5 /* MapInterfaceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapInterfaceController.m; sourceTree = "<group>"; };
-		08AC4EAC1C36480300FFFA35 /* VXReportingStation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VXReportingStation.h; sourceTree = "<group>"; };
-		08AC4EAD1C36480300FFFA35 /* VXReportingStation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VXReportingStation.m; sourceTree = "<group>"; };
-		08AC4EAF1C364B0400FFFA35 /* VXReportingStationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VXReportingStationManager.h; sourceTree = "<group>"; };
-		08AC4EB01C364B0500FFFA35 /* VXReportingStationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VXReportingStationManager.m; sourceTree = "<group>"; };
-		08AD80741C423F1E00FC52BF /* VXReportingStationManager+Data.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "VXReportingStationManager+Data.m"; sourceTree = "<group>"; };
-		08AD80761C42406500FC52BF /* VXReportingStationManager+Data.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "VXReportingStationManager+Data.h"; sourceTree = "<group>"; };
+		08AC4EAC1C36480300FFFA35 /* VXReportingStation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VXReportingStation.h; path = "VXMetar WatchKit Extension/VXReportingStation.h"; sourceTree = "<group>"; };
+		08AC4EAD1C36480300FFFA35 /* VXReportingStation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VXReportingStation.m; path = "VXMetar WatchKit Extension/VXReportingStation.m"; sourceTree = "<group>"; };
+		08AC4EAF1C364B0400FFFA35 /* VXReportingStationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VXReportingStationManager.h; path = "VXMetar WatchKit Extension/VXReportingStationManager.h"; sourceTree = "<group>"; };
+		08AC4EB01C364B0500FFFA35 /* VXReportingStationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VXReportingStationManager.m; path = "VXMetar WatchKit Extension/VXReportingStationManager.m"; sourceTree = "<group>"; };
+		08AD80741C423F1E00FC52BF /* VXReportingStationManager+Data.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "VXReportingStationManager+Data.m"; path = "VXMetar WatchKit Extension/VXReportingStationManager+Data.m"; sourceTree = "<group>"; };
+		08AD80761C42406500FC52BF /* VXReportingStationManager+Data.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "VXReportingStationManager+Data.h"; path = "VXMetar WatchKit Extension/VXReportingStationManager+Data.h"; sourceTree = "<group>"; };
 		08D1DD6D1C33A39F00739779 /* VXMetar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VXMetar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		08D1DD711C33A39F00739779 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		08D1DD731C33A39F00739779 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -124,12 +127,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		08A375001C4A1C4A00CD8BDB /* Common Files */ = {
+			isa = PBXGroup;
+			children = (
+				08AC4EAF1C364B0400FFFA35 /* VXReportingStationManager.h */,
+				08AC4EB01C364B0500FFFA35 /* VXReportingStationManager.m */,
+				08AD80761C42406500FC52BF /* VXReportingStationManager+Data.h */,
+				08AD80741C423F1E00FC52BF /* VXReportingStationManager+Data.m */,
+				08AC4EAC1C36480300FFFA35 /* VXReportingStation.h */,
+				08AC4EAD1C36480300FFFA35 /* VXReportingStation.m */,
+			);
+			name = "Common Files";
+			sourceTree = "<group>";
+		};
 		08D1DD641C33A39E00739779 = {
 			isa = PBXGroup;
 			children = (
 				084808511C3F9E0500A44570 /* MapKit.framework */,
 				0848084F1C3F9DA700A44570 /* MapKit.framework */,
 				08D1DD6F1C33A39F00739779 /* VXMetar */,
+				08A375001C4A1C4A00CD8BDB /* Common Files */,
 				08D1DD881C33A39F00739779 /* VXMetar WatchKit App */,
 				08D1DD971C33A39F00739779 /* VXMetar WatchKit Extension */,
 				08D1DD6E1C33A39F00739779 /* Products */,
@@ -189,12 +206,6 @@
 				08D1DD991C33A39F00739779 /* InterfaceController.m */,
 				086D54B11C3F90B400D584B5 /* MapInterfaceController.h */,
 				086D54B21C3F90B400D584B5 /* MapInterfaceController.m */,
-				08AC4EAF1C364B0400FFFA35 /* VXReportingStationManager.h */,
-				08AC4EB01C364B0500FFFA35 /* VXReportingStationManager.m */,
-				08AD80761C42406500FC52BF /* VXReportingStationManager+Data.h */,
-				08AD80741C423F1E00FC52BF /* VXReportingStationManager+Data.m */,
-				08AC4EAC1C36480300FFFA35 /* VXReportingStation.h */,
-				08AC4EAD1C36480300FFFA35 /* VXReportingStation.m */,
 				08D1DD9E1C33A39F00739779 /* Assets.xcassets */,
 				08D1DDA01C33A39F00739779 /* Info.plist */,
 			);
@@ -347,7 +358,10 @@
 			files = (
 				08D1DD781C33A39F00739779 /* ViewController.m in Sources */,
 				08D1DD751C33A39F00739779 /* AppDelegate.m in Sources */,
+				08A375021C4A212100CD8BDB /* VXReportingStationManager+Data.m in Sources */,
+				08A375031C4A212500CD8BDB /* VXReportingStation.m in Sources */,
 				08D1DD721C33A39F00739779 /* main.m in Sources */,
+				08A375011C4A211E00CD8BDB /* VXReportingStationManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
