@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -17,23 +18,38 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="800"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="KSBA" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gWE-0d-Yme">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="KSBA" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gWE-0d-Yme">
                                 <rect key="frame" x="0.0" y="20" width="600" height="60"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="40"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="40"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="cZ1-MX-wda">
-                                <rect key="frame" x="0.0" y="88" width="600" height="284"/>
-                            </mapView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="KSBA 160553Z 00000KT 10SM CLR 12/11 A3012 RMK AO2 SLP200 T01220106 10172 20111 53015" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="s6g-NF-igW">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="KSBA 160553Z 00000KT 10SM CLR 12/11 A3012 RMK AO2 SLP200 T01220106 10172 20111 53015" translatesAutoresizingMaskIntoConstraints="NO" id="s6g-NF-igW">
                                 <rect key="frame" x="20" y="380" width="560" height="400"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <accessibility key="accessibilityConfiguration">
+                                    <accessibilityTraits key="traits" notEnabled="YES"/>
+                                </accessibility>
+                                <fontDescription key="fontDescription" type="system" pointSize="28"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="no" spellCheckingType="no"/>
                             </textView>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="cZ1-MX-wda">
+                                <rect key="frame" x="0.0" y="80" width="600" height="284"/>
+                            </mapView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="s6g-NF-igW" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="21M-Zg-FKj"/>
+                            <constraint firstItem="s6g-NF-igW" firstAttribute="top" secondItem="cZ1-MX-wda" secondAttribute="bottom" constant="16" id="6Sj-33-82C"/>
+                            <constraint firstItem="s6g-NF-igW" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="biR-xJ-QYP"/>
+                            <constraint firstItem="s6g-NF-igW" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="cnW-WL-koe"/>
+                            <constraint firstItem="gWE-0d-Yme" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="ePd-vU-Q3X"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="s6g-NF-igW" secondAttribute="bottom" constant="20" id="jzw-el-uCH"/>
+                            <constraint firstItem="gWE-0d-Yme" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="lkP-3y-mZz"/>
+                            <constraint firstAttribute="trailing" secondItem="gWE-0d-Yme" secondAttribute="trailing" id="p5Y-bF-54G"/>
+                            <constraint firstItem="s6g-NF-igW" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="pvT-hO-EKz"/>
+                            <constraint firstItem="cZ1-MX-wda" firstAttribute="top" secondItem="gWE-0d-Yme" secondAttribute="bottom" id="wzb-gO-Z5M"/>
+                        </constraints>
                     </view>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="600" height="800"/>

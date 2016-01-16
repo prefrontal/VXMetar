@@ -27,12 +27,16 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
 
+
+    _metarText.textContainer.lineBreakMode = NSLineBreakByWordWrapping;
+
     // Configure interface objects here.
-    [_airportIdentifier setText:@""];
-    [_metarText setText:@""];
+    [_airportIdentifier setText:@"KSBA"];
+
+    [_metarText setText:@"KSBA 160553Z 00000KT 10SM CLR 12/11 A3012 RMK AO2 SLP200 T01220106 10172 20111 53015"];
 
     VXReportingStationManager *stationManager = [VXReportingStationManager sharedManager];
-    CLLocationCoordinate2D lastPosition = [stationManager getLastPosition];
+    CLLocationCoordinate2D lastPosition = [stationManager getLastStationPosition];
 
     CLLocationCoordinate2D location = CLLocationCoordinate2DMake (lastPosition.latitude, -1 * lastPosition.longitude);
     MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance (location, 10000, 10000);
