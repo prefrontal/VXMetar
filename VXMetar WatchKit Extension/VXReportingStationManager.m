@@ -68,7 +68,7 @@ static const double EARTH_RADIUS_IN_KILOMETERS = 6372.79756;
  * @param currentLongitude The longitude of the position you wish to query against.
  * @return Returns the VXReportingStation object that is closest to the coordinates.
  */
-- (VXReportingStation *) findClosestStationWithLatitude:(double)currentLatitude andLongitude:(double)currentLongitude;
+- (VXReportingStation *) findClosestStationWithLatitude:(double)currentLatitude andLongitude:(double)currentLongitude
 {
     // The goal is to find the closest reporting station to the given coordinates
     // Keep track of the closest station and the best distance value so far
@@ -90,6 +90,7 @@ static const double EARTH_RADIUS_IN_KILOMETERS = 6372.79756;
         double stationLatitudeRadians = fabs(station.latitude)*DEGREES_TO_RADIANS;
         
         double a = pow(sin(latitudeDiffRadians/2),2) + cos(currentLatitudeRadians) * cos(stationLatitudeRadians) * pow(sin(longitudeDiffRadians/2),2);
+        
         double distance = 2 * EARTH_RADIUS_IN_KILOMETERS * atan2(sqrt(a), sqrt(1-a));
 
         if (distance < closestStationDistance)
@@ -105,6 +106,20 @@ static const double EARTH_RADIUS_IN_KILOMETERS = 6372.79756;
     return closestStation;
 }
 
+- (double) calculateHaversineDistanceBetween:(CLLocationCoordinate2D)a and:(CLLocationCoordinate2D)b
+{
+    double aLatitudeRadians = fabs(a.latitude) * DEGREES_TO_RADIANS;
+    double bLatitudeRadians = fabs(b.latitude) * DEGREES_TO_RADIANS;
+    
+    double latitudeDiffRadians = (fabs(a.latitude) - b.latitude) * DEGREES_TO_RADIANS;
+    double longitudeDiffRadians = (fabs(a.longitude) - b.longitude) * DEGREES_TO_RADIANS;
+    
+    double temp = pow(sin(latitudeDiffRadians/2),2) + cos(aLatitudeRadians) * cos(bLatitudeRadians) * pow(sin(longitudeDiffRadians/2),2);
+    double distance = 2 * EARTH_RADIUS_IN_KILOMETERS * atan2(sqrt(temp), sqrt(1-temp));
+    
+    return distance;
+}
+
 #pragma mark Last Station Methods
 
 - (VXReportingStation *) getLastStation
@@ -116,6 +131,15 @@ static const double EARTH_RADIUS_IN_KILOMETERS = 6372.79756;
 {
     CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(_lastStation.latitude, _lastStation.longitude);
     return coordinate;
+}
+
+// Returns distance from last METAR station in km
+- (double) getLastStationDistanceFrom:(CLLocationCoordinate2D) location
+{
+    CLLocationCoordinate2D currentPosition = location;
+    CLLocationCoordinate2D stationPosition = [self getLastStationPosition];
+    
+    return [self calculateHaversineDistanceBetween:currentPosition and:stationPosition];
 }
 
 @end

@@ -15,6 +15,7 @@
 
 // Location Manager Handling
 @property (nonatomic,readwrite,retain) CLLocationManager *locationManager;
+@property (nonatomic,readwrite,retain) CLLocation *lastLocation;
 
 // NSXMLParser Handling
 @property (nonatomic,readwrite,retain) NSXMLParser *parser;
@@ -47,7 +48,8 @@
     [_locationManager requestWhenInUseAuthorization];
     [_locationManager requestLocation];
 
-    //_metarText.textContainer.lineBreakMode = NSLineBreakByWordWrapping;
+    // Setup the map view
+    [_mapView setDelegate:self];
 
     // Configure interface objects here.
     [_airportIdentifier setText:@""];
@@ -105,6 +107,44 @@
     [dataTask resume];
 }
 
+#pragma mark Map Update Methods
+
+static const double MAP_VIEW_MULTIPLIER = 2.2;
+
+- (void) updateMapLocation
+{
+    VXReportingStationManager *stationManager = [VXReportingStationManager sharedManager];
+    
+    // Determine distance from us to the station
+    double distanceInMeters = 1000*[stationManager getLastStationDistanceFrom:_lastLocation.coordinate];
+    NSLog (@"%f", distanceInMeters);
+    
+    // Update the map view with the new METAR station location
+    CLLocationCoordinate2D lastPosition = [stationManager getLastStationPosition];
+    lastPosition.longitude *= -1;  // Coordinates come from the database without E/W designation
+    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance (lastPosition, distanceInMeters * MAP_VIEW_MULTIPLIER, distanceInMeters * MAP_VIEW_MULTIPLIER);
+    [self.mapView setRegion:region];
+    
+    // CLear any existing annotations
+    for (id annotation in self.mapView.annotations)
+    {
+        [self.mapView removeAnnotation:annotation];
+    }
+    
+    // Add in the pins for station and user
+    MKPointAnnotation *stationPoint = [MKPointAnnotation new];
+    stationPoint.coordinate = lastPosition;
+    [self.mapView addAnnotation:stationPoint];
+    
+    MKPointAnnotation *userPoint = [MKPointAnnotation new];
+    userPoint.coordinate = _lastLocation.coordinate;
+    [self.mapView addAnnotation:userPoint];
+    
+    // Add in range circle
+    MKCircle *rangeCircle = [MKCircle circleWithCenterCoordinate:lastPosition radius:distanceInMeters];
+    [self.mapView addOverlay:rangeCircle];
+}
+
 #pragma mark Location Manager Delegate Methods
 
 -(void) locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
@@ -122,6 +162,7 @@
     CLLocation *location = [locations lastObject];
     double currentLatitude = location.coordinate.latitude;
     double currentLongitude = location.coordinate.longitude;
+    _lastLocation = location;
     
     VXReportingStationManager *stationManager = [VXReportingStationManager sharedManager];
     VXReportingStation *closestStation = [stationManager findClosestStationWithLatitude:currentLatitude andLongitude:currentLongitude];
@@ -130,14 +171,7 @@
     [_metarText setText:@""];
     
     [self issueMetarRequestWithStation:closestStation];
-    
-
-    // Update the map view with the new METAR station location
-    CLLocationCoordinate2D lastPosition = [stationManager getLastStationPosition];
-    lastPosition.longitude *= -1;  // Coordinates come from the database without E/W designation
-    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance (lastPosition, 10000, 10000);
-    
-    [self.mapView setRegion:region];
+    [self updateMapLocation];
 }
 
 -(void) locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
@@ -148,6 +182,16 @@
 - (void) locationManager:(CLLocationManager *)manager didFailWithError:(nonnull NSError *)error
 {
     NSLog (@"Could not find location: %@", error);
+}
+
+#pragma mark Location Manager Delegate Methods
+
+- (MKOverlayRenderer *)mapView:(MKMapView *)mapView rendererForOverlay:(id <MKOverlay>)overlay
+{
+    MKCircleRenderer *circleR = [[MKCircleRenderer alloc] initWithCircle:(MKCircle *)overlay];
+    circleR.fillColor = [[UIColor grayColor] colorWithAlphaComponent:0.2];
+    
+    return circleR;
 }
 
 #pragma mark NSXMLParser Delegate Methods
@@ -169,10 +213,8 @@
     if (_isRawTextElement)
     {
         // Do UI updates on the main queue, or face the wrath of the exception gods...
-        dispatch_async (dispatch_get_main_queue(),
-                        ^{
-                            [_metarText setText:string];
-                        });
+        void (^testUpdate)() = ^() {[_metarText setText:string];};
+        dispatch_async (dispatch_get_main_queue(), testUpdate);
     }
 }
 

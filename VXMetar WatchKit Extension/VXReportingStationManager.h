@@ -23,5 +23,6 @@
 // Convenience methods for use in secondary classes
 - (VXReportingStation *) getLastStation;
 - (CLLocationCoordinate2D) getLastStationPosition;
+- (double) getLastStationDistanceFrom:(CLLocationCoordinate2D) location;
 
 @end

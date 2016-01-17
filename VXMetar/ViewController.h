@@ -10,7 +10,7 @@
 #import <Foundation/Foundation.h>
 #import <MapKit/MapKit.h>
 
-@interface ViewController : UIViewController <CLLocationManagerDelegate, NSXMLParserDelegate>
+@interface ViewController : UIViewController <CLLocationManagerDelegate, MKMapViewDelegate, NSXMLParserDelegate>
 
 
 @end
