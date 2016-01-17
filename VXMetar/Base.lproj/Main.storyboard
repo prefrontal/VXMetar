@@ -18,22 +18,22 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="800"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="KSBA" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gWE-0d-Yme">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gWE-0d-Yme">
                                 <rect key="frame" x="0.0" y="20" width="600" height="60"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="40"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="KSBA 160553Z 00000KT 10SM CLR 12/11 A3012 RMK AO2 SLP200 T01220106 10172 20111 53015" translatesAutoresizingMaskIntoConstraints="NO" id="s6g-NF-igW">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s6g-NF-igW">
                                 <rect key="frame" x="20" y="380" width="560" height="400"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <accessibility key="accessibilityConfiguration">
                                     <accessibilityTraits key="traits" notEnabled="YES"/>
                                 </accessibility>
-                                <fontDescription key="fontDescription" type="system" pointSize="28"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="no" spellCheckingType="no"/>
                             </textView>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="cZ1-MX-wda">
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="cZ1-MX-wda">
                                 <rect key="frame" x="0.0" y="80" width="600" height="284"/>
                             </mapView>
                         </subviews>
@@ -41,6 +41,8 @@
                         <constraints>
                             <constraint firstItem="s6g-NF-igW" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="21M-Zg-FKj"/>
                             <constraint firstItem="s6g-NF-igW" firstAttribute="top" secondItem="cZ1-MX-wda" secondAttribute="bottom" constant="16" id="6Sj-33-82C"/>
+                            <constraint firstAttribute="trailing" secondItem="cZ1-MX-wda" secondAttribute="trailing" id="HkD-bG-lsq"/>
+                            <constraint firstItem="cZ1-MX-wda" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="WYH-Sa-a5T"/>
                             <constraint firstItem="s6g-NF-igW" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="biR-xJ-QYP"/>
                             <constraint firstItem="s6g-NF-igW" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="cnW-WL-koe"/>
                             <constraint firstItem="gWE-0d-Yme" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="ePd-vU-Q3X"/>
