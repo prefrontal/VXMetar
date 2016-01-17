@@ -13,6 +13,8 @@
 
 @interface ViewController ()
 
+#pragma mark Private Properties
+
 // Location Manager Handling
 @property (nonatomic,readwrite,retain) CLLocationManager *locationManager;
 @property (nonatomic,readwrite,retain) CLLocation *lastLocation;
@@ -33,7 +35,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
 
     // Create location manager obejct and set delegate
     if (_locationManager == nil)
@@ -51,23 +52,14 @@
     // Setup the map view
     [_mapView setDelegate:self];
 
-    // Configure interface objects here.
+    // Initialize interface objects here.
     [_airportIdentifier setText:@""];
     [_metarText setText:@""];
-
-//    VXReportingStationManager *stationManager = [VXReportingStationManager sharedManager];
-//    CLLocationCoordinate2D lastPosition = [stationManager getLastStationPosition];
-//
-//    CLLocationCoordinate2D location = CLLocationCoordinate2DMake (lastPosition.latitude, -1 * lastPosition.longitude);
-//    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance (location, 10000, 10000);
-//
-//    [self.mapView setRegion:region];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark METAR Request Methods
@@ -95,8 +87,8 @@
                                               return;
                                           }
                                           
-                                          //NSString* myString = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
-                                          //NSLog (@"%@", myString);
+                                          NSString* myString = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
+                                          NSLog (@"%@", myString);
                                           
                                           _parser = [[NSXMLParser alloc] initWithData:data];
                                           [_parser setDelegate:self];
@@ -109,8 +101,14 @@
 
 #pragma mark Map Update Methods
 
+// We have the distance from the current location to the reporting station, which is the radius.
+// We then need to multiply this by two to get the effective diameter. We also add a bit so the
+// user's position isn't sitting at the edge of the screen. That makes up the map view multiplier.
 static const double MAP_VIEW_MULTIPLIER = 2.2;
 
+/**
+ * Use the current location and current station data to redraw the map
+ */
 - (void) updateMapLocation
 {
     VXReportingStationManager *stationManager = [VXReportingStationManager sharedManager];
@@ -131,14 +129,10 @@ static const double MAP_VIEW_MULTIPLIER = 2.2;
         [self.mapView removeAnnotation:annotation];
     }
     
-    // Add in the pins for station and user
+    // Add in a pin for the station
     MKPointAnnotation *stationPoint = [MKPointAnnotation new];
     stationPoint.coordinate = lastPosition;
     [self.mapView addAnnotation:stationPoint];
-    
-    MKPointAnnotation *userPoint = [MKPointAnnotation new];
-    userPoint.coordinate = _lastLocation.coordinate;
-    [self.mapView addAnnotation:userPoint];
     
     // Add in range circle
     MKCircle *rangeCircle = [MKCircle circleWithCenterCoordinate:lastPosition radius:distanceInMeters];
@@ -182,6 +176,7 @@ static const double MAP_VIEW_MULTIPLIER = 2.2;
 - (void) locationManager:(CLLocationManager *)manager didFailWithError:(nonnull NSError *)error
 {
     NSLog (@"Could not find location: %@", error);
+    [_metarText setText:@"Could not determine current location."];
 }
 
 #pragma mark Location Manager Delegate Methods
@@ -195,6 +190,9 @@ static const double MAP_VIEW_MULTIPLIER = 2.2;
 }
 
 #pragma mark NSXMLParser Delegate Methods
+
+// We aren't doing anything fancy with the XML here. We look for the raw_text tag containing the METAR text.
+// When we find it we process that element, then we go back to ignoring the rest of the XML.
 
 - (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qualifiedName attributes:(NSDictionary *)attributeDict
 {
