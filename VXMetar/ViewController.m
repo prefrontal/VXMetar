@@ -50,6 +50,8 @@
     [_locationManager requestLocation];
 
     // Setup the map view
+    [_mapView setShowsCompass:TRUE];
+    [_mapView setShowsScale:TRUE];
     [_mapView setDelegate:self];
 
     // Initialize interface objects here.
