@@ -11,6 +11,4 @@
 
 @interface InterfaceController : WKInterfaceController <CLLocationManagerDelegate, NSXMLParserDelegate>
 
-@property (nonatomic,readwrite,retain) CLLocationManager *locationManager;
-
 @end

@@ -143,12 +143,12 @@
 		08D1DD641C33A39E00739779 = {
 			isa = PBXGroup;
 			children = (
-				084808511C3F9E0500A44570 /* MapKit.framework */,
-				0848084F1C3F9DA700A44570 /* MapKit.framework */,
 				08D1DD6F1C33A39F00739779 /* VXMetar */,
 				08A375001C4A1C4A00CD8BDB /* Common Files */,
 				08D1DD881C33A39F00739779 /* VXMetar WatchKit App */,
 				08D1DD971C33A39F00739779 /* VXMetar WatchKit Extension */,
+				084808511C3F9E0500A44570 /* MapKit.framework */,
+				0848084F1C3F9DA700A44570 /* MapKit.framework */,
 				08D1DD6E1C33A39F00739779 /* Products */,
 			);
 			sourceTree = "<group>";

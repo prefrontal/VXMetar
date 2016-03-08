@@ -16,11 +16,14 @@
 #pragma mark Class-Continuation Category
 
 @interface InterfaceController()
-{
-    // NSXMLParser Handling
-    NSXMLParser *parser;
-    bool isRawTextElement;
-}
+
+// Location Manager Handling
+@property (nonatomic,readwrite,retain) CLLocationManager *locationManager;
+@property (nonatomic,readwrite,retain) CLLocation *lastLocation;
+
+// NSXMLParser Handling
+@property (nonatomic,readwrite,retain) NSXMLParser *parser;
+@property (nonatomic,readwrite,assign) bool isRawTextElement;
 
 @property (unsafe_unretained, nonatomic) IBOutlet WKInterfaceButton *airportIdentifier;
 @property (unsafe_unretained, nonatomic) IBOutlet WKInterfaceLabel *metarText;
@@ -94,10 +97,10 @@
                     //NSString* myString = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
                     //NSLog (@"%@", myString);
 
-                    parser = [[NSXMLParser alloc] initWithData:data];
-                    [parser setDelegate:self];
-                    [parser setShouldResolveExternalEntities:NO];
-                    [parser parse];
+                    _parser = [[NSXMLParser alloc] initWithData:data];
+                    [_parser setDelegate:self];
+                    [_parser setShouldResolveExternalEntities:NO];
+                    [_parser parse];
                 }];
     
     [dataTask resume];
@@ -137,27 +140,35 @@
 
 - (void) locationManager:(CLLocationManager *)manager didFailWithError:(nonnull NSError *)error
 {
+    [_metarText setText:@"Could not determine current location."];
     NSLog (@"Could not find location: %@", error);
 }
 
 #pragma mark NSXMLParser Delegate Methods
 
+// We aren't doing anything fancy with the XML here. We look for the raw_text tag containing the METAR text.
+// When we find it we process that element, then we go back to ignoring the rest of the XML.
+
 - (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qualifiedName attributes:(NSDictionary *)attributeDict
 {
     if ([elementName isEqualToString:@"raw_text"])
-        isRawTextElement = true;
+        _isRawTextElement = true;
 }
-      
+
 - (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName
 {
     if ([elementName isEqualToString:@"raw_text"])
-        isRawTextElement = false;
+        _isRawTextElement = false;
 }
-      
+
 - (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string
 {
-    if (isRawTextElement)
-        [_metarText setText:string];
+    if (_isRawTextElement)
+    {
+        // Do UI updates on the main queue, or face the wrath of the exception gods...
+        void (^testUpdate)() = ^() {[_metarText setText:string];};
+        dispatch_async (dispatch_get_main_queue(), testUpdate);
+    }
 }
 
 @end

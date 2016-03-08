@@ -12,6 +12,5 @@
 
 @interface ViewController : UIViewController <CLLocationManagerDelegate, MKMapViewDelegate, NSXMLParserDelegate>
 
-
 @end
 

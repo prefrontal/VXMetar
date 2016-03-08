@@ -62,7 +62,7 @@ static const double EARTH_RADIUS_IN_KILOMETERS = 6372.79756;
 
 /**
  * Takes a latitude and longitude value and finds the station in the 
- * station list that is physically closes to the cooridnate.
+ * station list that is physically closest to the cooridnate.
  *
  * @param currentLatitude The latitude of the position you wish to query against.
  * @param currentLongitude The longitude of the position you wish to query against.

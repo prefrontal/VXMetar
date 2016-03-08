@@ -79,23 +79,24 @@
     
     NSURLSession *session = [NSURLSession sharedSession];
     NSURLSessionDataTask *dataTask = [session dataTaskWithURL:dataUrl completionHandler:
-                                      ^(NSData *data, NSURLResponse *response, NSError *error)
-                                      {
-                                          if (error != nil)
-                                          {
-                                              [_metarText setText:@"Couldn't reach server..."];
-                                              return;
-                                          }
-                                          
-                                          NSString* myString = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
-                                          NSLog (@"%@", myString);
-                                          
-                                          _parser = [[NSXMLParser alloc] initWithData:data];
-                                          [_parser setDelegate:self];
-                                          [_parser setShouldResolveExternalEntities:NO];
-                                          [_parser parse];
-                                      }];
-    
+          ^(NSData *data, NSURLResponse *response, NSError *error)
+          {
+              if (error != nil)
+              {
+                  [_metarText setText:@"Couldn't reach server..."];
+                  return;
+              }
+
+              // Debugging: Log the entire XML string if necessary
+              // NSString* myString = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
+              // NSLog (@"%@", myString);
+              
+              _parser = [[NSXMLParser alloc] initWithData:data];
+              [_parser setDelegate:self];
+              [_parser setShouldResolveExternalEntities:NO];
+              [_parser parse];
+          }];
+
     [dataTask resume];
 }
 
@@ -104,7 +105,7 @@
 // We have the distance from the current location to the reporting station, which is the radius.
 // We then need to multiply this by two to get the effective diameter. We also add a bit so the
 // user's position isn't sitting at the edge of the screen. That makes up the map view multiplier.
-static const double MAP_VIEW_MULTIPLIER = 2.2;
+static const double MAP_VIEW_MULTIPLIER = 5.0;
 
 /**
  * Use the current location and current station data to redraw the map
@@ -120,9 +121,10 @@ static const double MAP_VIEW_MULTIPLIER = 2.2;
     // Update the map view with the new METAR station location
     CLLocationCoordinate2D lastPosition = [stationManager getLastStationPosition];
     lastPosition.longitude *= -1;  // Coordinates come from the database without E/W designation
+
     MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance (lastPosition, distanceInMeters * MAP_VIEW_MULTIPLIER, distanceInMeters * MAP_VIEW_MULTIPLIER);
     [self.mapView setRegion:region];
-    
+
     // CLear any existing annotations
     for (id annotation in self.mapView.annotations)
     {
@@ -175,8 +177,8 @@ static const double MAP_VIEW_MULTIPLIER = 2.2;
 
 - (void) locationManager:(CLLocationManager *)manager didFailWithError:(nonnull NSError *)error
 {
-    NSLog (@"Could not find location: %@", error);
     [_metarText setText:@"Could not determine current location."];
+    NSLog (@"Could not find location: %@", error);
 }
 
 #pragma mark Location Manager Delegate Methods
@@ -213,6 +215,8 @@ static const double MAP_VIEW_MULTIPLIER = 2.2;
         // Do UI updates on the main queue, or face the wrath of the exception gods...
         void (^testUpdate)() = ^() {[_metarText setText:string];};
         dispatch_async (dispatch_get_main_queue(), testUpdate);
+
+        NSLog (@"%@", string);
     }
 }
 
