@@ -36,7 +36,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "VXMetar/ViewController.m"
+<<<<<<< HEAD
             timestampString = "479111346.405098"
+=======
+            timestampString = "475293841.107947"
+>>>>>>> origin/master
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "175"
